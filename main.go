@@ -7,7 +7,29 @@ package main
 #include <selinux/selinux.h>
 */
 import "C"
-import "fmt"
+import (
+	"fmt"
+	"unsafe"
+)
+
+func IsSelinuxEnabled() int {
+
+	//result := C.is_selinux_enabled()
+	//b := C.GoBytes(ptr, size)
+	return int(C.is_selinux_enabled())
+}
+
+func IsSelinuxMlsEnabled() int {
+	return int(C.is_selinux_mls_enabled())
+}
+
+func GetFileCon() string {
+	file := C.CString("/home/neck/.ssh/authorized_keys")
+	defer C.free(unsafe.Pointer(file))
+	var p *C.char
+	size := C.getfilecon(file, &p)
+	return C.GoStringN(p, size)
+}
 
 func main() {
 	/*
@@ -27,4 +49,7 @@ func main() {
 
 	size := C.selinuxfs_exists()
 	fmt.Println(size)
+	fmt.Println(IsSelinuxEnabled())
+	fmt.Println(IsSelinuxMlsEnabled())
+	fmt.Println(GetFileCon())
 }

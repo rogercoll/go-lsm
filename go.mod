@@ -1,3 +1,3 @@
-module github.com/rogercoll/go-seboolean
+module github.com/rogercoll/go-lsm
 
 go 1.17

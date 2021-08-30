@@ -3,6 +3,7 @@ package lsm
 import (
 	"fmt"
 
+	"github.com/rogercoll/go-lsm/apparmor"
 	"github.com/rogercoll/go-lsm/selinux"
 	"github.com/rogercoll/go-lsm/yama"
 )
@@ -10,11 +11,12 @@ import (
 func GetEnabledModules() map[string]bool {
 	//For now only two modules are implemented
 	modules := make(map[string]bool, 2)
-	fmt.Println("WARNING: AppArmor still not implemented")
 	fmt.Println("WARNING: LoadPin still not implemented")
 	fmt.Println("WARNING: Smack still not implemented")
 	fmt.Println("WARNING: TOMOYO still not implemented")
 	modules["selinux"] = selinux.IsSelinuxEnabled()
+	appArmorEnabled, _ := apparmor.IsAppArmorEnabled()
+	modules["apparmor"] = appArmorEnabled
 	yamaEnabled, _ := yama.IsYamaEnabled()
 	modules["yama"] = yamaEnabled
 	return modules

@@ -12,6 +12,13 @@ type Context struct {
 	Level string
 }
 
+type User struct {
+	//to keep a mapping to the actual linux username
+	linuxUser string
+	User      string
+	Security  string
+}
+
 //Go fmt Stringer Interface implementation
 func (c *Context) String() string {
 	return c.User + ":" + c.Role + ":" + c.Type + ":" + c.Level

@@ -25,4 +25,5 @@ func main() {
 	fmt.Println(selinux.IsSelinuxEnabled())
 	fmt.Println(selinux.IsSelinuxMlsEnabled())
 	fmt.Println(selinux.GetFileCon("/etc/hosts"))
+	fmt.Println(selinux.GetSEUser("neck"))
 }

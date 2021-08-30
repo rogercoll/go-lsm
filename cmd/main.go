@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	modules := lsm.GetEnabledModules()
+	modules := lsm.GetLoadedModules()
 	for module, enabled := range modules {
 		if enabled {
 			fmt.Printf("Module: %s is enabled\n", module)
@@ -15,4 +15,5 @@ func main() {
 		}
 		fmt.Printf("Module: %s is not enabled\n", module)
 	}
+	fmt.Println(lsm.GetActiveModules())
 }

@@ -2,13 +2,19 @@ package lsm
 
 import (
 	"fmt"
+	"io/ioutil"
+	"strings"
 
 	"github.com/rogercoll/go-lsm/apparmor"
 	"github.com/rogercoll/go-lsm/selinux"
 	"github.com/rogercoll/go-lsm/yama"
 )
 
-func GetEnabledModules() map[string]bool {
+const (
+	lsmFile = "/sys/kernel/security/lsm"
+)
+
+func GetLoadedModules() map[string]bool {
 	//For now only two modules are implemented
 	modules := make(map[string]bool, 2)
 	fmt.Println("WARNING: LoadPin still not implemented")
@@ -20,6 +26,16 @@ func GetEnabledModules() map[string]bool {
 	yamaEnabled, _ := yama.IsYamaEnabled()
 	modules["yama"] = yamaEnabled
 	return modules
+}
+
+//https://www.kernel.org/doc/Documentation/security/LSM.txt
+func GetActiveModules() ([]string, error) {
+	body, err := ioutil.ReadFile(lsmFile)
+	if err != nil {
+		return nil, err
+	}
+	//comma separated list, and will always include the capability module
+	return strings.Split(strings.TrimSuffix(string(body), "\n"), ","), nil
 }
 
 /*

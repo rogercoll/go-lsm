@@ -12,10 +12,13 @@ import (
 	"unsafe"
 )
 
-func IsSelinuxEnabled() int {
+func IsSelinuxEnabled() bool {
 	//result := C.is_selinux_enabled()
 	//b := C.GoBytes(ptr, size)
-	return int(C.is_selinux_enabled())
+	if int(C.is_selinux_enabled()) == 1 {
+		return true
+	}
+	return false
 }
 
 func IsSelinuxMlsEnabled() int {

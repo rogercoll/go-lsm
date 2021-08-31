@@ -23,7 +23,7 @@ func GetLoadedModules() map[string]bool {
 	modules["selinux"] = selinux.IsSelinuxEnabled()
 	appArmorEnabled, _ := apparmor.IsAppArmorEnabled()
 	modules["apparmor"] = appArmorEnabled
-	yamaEnabled, _ := yama.IsYamaEnabled()
+	yamaEnabled, _ := yama.IsEnabled()
 	modules["yama"] = yamaEnabled
 	return modules
 }

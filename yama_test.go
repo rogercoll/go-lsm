@@ -1,11 +1,13 @@
-package yama
+package lsm
 
 import (
 	"io/ioutil"
+	"os"
+	"strings"
 	"testing"
 )
 
-func TestIsEnabled(t *testing.T) {
+func TestYAMAIsEnabled(t *testing.T) {
 	var yamaFileTest = []struct {
 		name        string
 		fileContent string
@@ -16,13 +18,23 @@ func TestIsEnabled(t *testing.T) {
 	}
 	for _, tt := range yamaFileTest {
 		t.Run(tt.name, func(t *testing.T) {
-			f, err := ioutil.TempFile("", "testyamafile")
+			totalFile := strings.Split(ptrace_scope_file, "/")
+			tmpDir := os.TempDir() + strings.Join(totalFile[:len(totalFile)-1], "/")
+			err := os.MkdirAll(tmpDir, 0777)
 			if err != nil {
 				t.Error(err)
 			}
+			f, err := os.Create(os.TempDir() + ptrace_scope_file)
+			if err != nil {
+				t.Error(err)
+			}
+			defer os.Remove(f.Name()) // clean up
 			ioutil.WriteFile(f.Name(), []byte(tt.fileContent), 0644)
-			ptrace_scope_file = f.Name()
-			enabled, err := IsEnabled()
+			lsm, err := NewLSMConfig("./", os.TempDir())
+			if err != nil {
+				t.Error(err)
+			}
+			enabled, err := lsm.IsYamaEnabled()
 			if err != nil {
 				t.Error(err)
 			}

@@ -2,18 +2,21 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/rogercoll/go-lsm"
 )
 
 func main() {
-	modules := lsm.GetLoadedModules()
-	for module, enabled := range modules {
-		if enabled {
-			fmt.Printf("Module: %s is enabled\n", module)
-			continue
-		}
-		fmt.Printf("Module: %s is not enabled\n", module)
+	lsmc, err := lsm.NewDefaultConfig()
+	if err != nil {
+		log.Fatal(err)
 	}
-	fmt.Println(lsm.GetActiveModules())
+	modules, err := lsmc.GetActiveModules()
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, module := range modules {
+		fmt.Printf("Module: %s is enabled\n", module)
+	}
 }

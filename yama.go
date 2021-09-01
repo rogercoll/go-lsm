@@ -1,4 +1,4 @@
-package yama
+package lsm
 
 import (
 	"io/ioutil"
@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	ptrace_scope_file = "/proc/sys/kernel/yama/ptrace_scope"
+	// normally in "/proc/sys/kernel/yama/ptrace_scope"
+	ptrace_scope_file = "/sys/kernel/yama/ptrace_scope"
 )
 
 func parsePtraceScopeFile(path string) (string, error) {
@@ -22,9 +23,9 @@ func parsePtraceScopeFile(path string) (string, error) {
 	}
 }
 
-// IsEnabled checks whether YAMA is enabled or not
-func IsEnabled() (bool, error) {
-	scope, err := parsePtraceScopeFile(ptrace_scope_file)
+// IsYamaEnabled checks whether YAMA is enabled or not
+func (l *LSMConfig) IsYamaEnabled() (bool, error) {
+	scope, err := parsePtraceScopeFile(l.procfs + ptrace_scope_file)
 	if err != nil {
 		return false, err
 	}
@@ -35,20 +36,20 @@ func IsEnabled() (bool, error) {
 	return false, nil
 }
 
-// Scope gets the current YAMA scope of the system
-func Scope() (int, error) {
-	scope, err := parsePtraceScopeFile(ptrace_scope_file)
+// YAMAScope gets the current YAMA scope of the system
+func (l *LSMConfig) YAMAScope() (int, error) {
+	scope, err := parsePtraceScopeFile(l.procfs + ptrace_scope_file)
 	if err != nil {
 		return 0, err
 	}
 	return strconv.Atoi(scope)
 }
 
-// ScopeDecription describes a given scope
+// YAMAScopeDecription describes a given scope
 //
 // Kernel docs:
 // https://www.kernel.org/doc/html/v4.15/admin-guide/LSM/Yama.html
-func ScopeDescription(scope string) string {
+func YAMAScopeDescription(scope string) string {
 	switch scope {
 	case "0":
 		return "classic ptrace permissions"

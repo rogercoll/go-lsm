@@ -19,4 +19,5 @@ func main() {
 	for _, module := range modules {
 		fmt.Printf("Module: %s is enabled\n", module)
 	}
+	fmt.Println(lsmc.LockdownScope())
 }

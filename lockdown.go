@@ -9,6 +9,7 @@ import (
 const (
 	// /sys + xx
 	lockdownScopeFile = "/kernel/security/lockdown"
+	sinceLinux        = "5.4"
 )
 
 func parseLockdownScopeFile(path string) (string, error) {
@@ -26,8 +27,8 @@ func parseLockdownScopeFile(path string) (string, error) {
 	return "", errors.New("Invalid lockdown format file")
 }
 
-func (l *LSMConfig) IsLockdownEnabled() (bool, error) {
-	scope, err := parseLockdownScopeFile(l.sysfs + lockdownScopeFile)
+func (l *LSM) IsLockdownEnabled() (bool, error) {
+	scope, err := parseLockdownScopeFile(l.c.LockdownScope)
 	if err != nil {
 		return false, err
 	}
@@ -37,6 +38,6 @@ func (l *LSMConfig) IsLockdownEnabled() (bool, error) {
 	return false, nil
 }
 
-func (l *LSMConfig) LockdownScope() (string, error) {
-	return parseLockdownScopeFile(l.sysfs + lockdownScopeFile)
+func (l *LSM) LockdownScope() (string, error) {
+	return parseLockdownScopeFile(l.c.LockdownScope)
 }

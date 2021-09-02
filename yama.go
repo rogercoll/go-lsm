@@ -24,8 +24,8 @@ func parsePtraceScopeFile(path string) (string, error) {
 }
 
 // IsYamaEnabled checks whether YAMA is enabled or not
-func (l *LSMConfig) IsYamaEnabled() (bool, error) {
-	scope, err := parsePtraceScopeFile(l.procfs + ptrace_scope_file)
+func (l *LSM) IsYamaEnabled() (bool, error) {
+	scope, err := parsePtraceScopeFile(l.c.YamaScope)
 	if err != nil {
 		return false, err
 	}
@@ -37,8 +37,8 @@ func (l *LSMConfig) IsYamaEnabled() (bool, error) {
 }
 
 // YAMAScope gets the current YAMA scope of the system
-func (l *LSMConfig) YAMAScope() (int, error) {
-	scope, err := parsePtraceScopeFile(l.procfs + ptrace_scope_file)
+func (l *LSM) YAMAScope() (int, error) {
+	scope, err := parsePtraceScopeFile(l.c.YamaScope)
 	if err != nil {
 		return 0, err
 	}

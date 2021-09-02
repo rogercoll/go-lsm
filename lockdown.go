@@ -6,12 +6,6 @@ import (
 	"strings"
 )
 
-const (
-	// /sys + xx
-	lockdownScopeFile = "/kernel/security/lockdown"
-	sinceLinux        = "5.4"
-)
-
 func parseLockdownScopeFile(path string) (string, error) {
 	body, err := ioutil.ReadFile(path)
 	if err != nil {

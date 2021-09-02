@@ -22,7 +22,10 @@ func TestYAMAIsEnabled(t *testing.T) {
 				t.Error(err)
 			}
 			defer os.Remove(f.Name()) // clean up
-			ioutil.WriteFile(f.Name(), []byte(tt.fileContent), 0644)
+			err := ioutil.WriteFile(f.Name(), []byte(tt.fileContent), 0644)
+			if err != nil {
+				t.Error(err)
+			}
 			lsm, err := NewLSMConfig(ConfigPath{YamaScope: f.Name()})
 			if err != nil {
 				t.Error(err)

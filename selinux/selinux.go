@@ -15,10 +15,7 @@ import (
 func IsSelinuxEnabled() bool {
 	//result := C.is_selinux_enabled()
 	//b := C.GoBytes(ptr, size)
-	if int(C.is_selinux_enabled()) == 1 {
-		return true
-	}
-	return false
+	return int(C.is_selinux_enabled()) == 1
 }
 
 func IsSelinuxMlsEnabled() int {
@@ -44,7 +41,7 @@ func GetSEUser(linuxUser string) (*User, error) {
 	defer C.free(unsafe.Pointer(level))
 	result := C.getseuserbyname(linux, &seUser, &level)
 	if result != 0 {
-		errors.New("Could not find a valid SELinux for the given Linux user")
+		return nil, errors.New("Could not find a valid SELinux for the given Linux user")
 	}
 	return &User{linuxUser, C.GoString(seUser), C.GoString(level)}, nil
 }

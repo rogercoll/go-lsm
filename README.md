@@ -16,13 +16,16 @@ apt install libselinux1-dev
 
 ## Usage
 
-A main tool is implemented to check what modules are enabled, output of `go run cmd/main.go`:
-
+```go
+import "github.com/rogercoll/go-lsm"
 ```
-WARNING: LoadPin still not implemented
-WARNING: Smack still not implemented
-WARNING: TOMOYO still not implemented
-Module: selinux is enabled
-Module: apparmor is not enabled
-Module: yama is enabled
+
+Construct a new LSM config, then use the various methods to access different parts of the system Linux Security modules configuration. For example, to get all loaded security modules:
+
+```go
+l, err := lsm.NewDefaultConfig()
+if err != nil {
+  log.Fatalf("Failed to create default config: %v", err)
+}
+modules, err := l.GetLoadedModules()
 ```

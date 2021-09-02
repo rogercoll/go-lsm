@@ -1,6 +1,7 @@
 # Go Linux Security Modules
 
 [![Build Status](https://github.com/rogercoll/go-lsm/workflows/Lint%20and%20Test/badge.svg)](https://github.com/rogercoll/go-lsm/actions?workflow=Lint%20and%20Test)
+[![GoDoc](https://godoc.org/github.com/rogercoll/go-lsm?status.svg)](https://godoc.org/github.com/rogercoll/go-lsm)
 
 Go-wrapper around **Linux Security Modules** basic operations. 
 

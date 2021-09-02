@@ -27,6 +27,7 @@ func parseLockdownScopeFile(path string) (string, error) {
 	return "", errors.New("Invalid lockdown format file")
 }
 
+// IsLockdownEnabled checks whether Lockdown LSM is active or not
 func (l *LSM) IsLockdownEnabled() (bool, error) {
 	scope, err := parseLockdownScopeFile(l.c.LockdownScope)
 	if err != nil {
@@ -38,6 +39,7 @@ func (l *LSM) IsLockdownEnabled() (bool, error) {
 	return false, nil
 }
 
+// LockdownScope gets the current Lockdown scope (none, integrity or confidentiality)
 func (l *LSM) LockdownScope() (string, error) {
 	return parseLockdownScopeFile(l.c.LockdownScope)
 }

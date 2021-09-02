@@ -12,7 +12,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	modules, err := lsmc.GetActiveModules()
+	modules, err := lsmc.GetLoadedModules()
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -7,11 +7,6 @@ import (
 	"strings"
 )
 
-var (
-	// normally in "/proc/sys/kernel/yama/ptrace_scope"
-	ptrace_scope_file = "/sys/kernel/yama/ptrace_scope"
-)
-
 func parsePtraceScopeFile(path string) (string, error) {
 	if body, err := ioutil.ReadFile(path); err == nil {
 		//Scope: from 0 (classic/disabled) to 4
@@ -36,8 +31,8 @@ func (l *LSM) IsYamaEnabled() (bool, error) {
 	return false, nil
 }
 
-// YAMAScope gets the current YAMA scope of the system
-func (l *LSM) YAMAScope() (int, error) {
+// YamaScope gets the current YAMA scope of the system
+func (l *LSM) YamaScope() (int, error) {
 	scope, err := parsePtraceScopeFile(l.c.YamaScope)
 	if err != nil {
 		return 0, err
@@ -45,11 +40,11 @@ func (l *LSM) YAMAScope() (int, error) {
 	return strconv.Atoi(scope)
 }
 
-// YAMAScopeDecription describes a given scope
+// YamaScopeDescription describes a given scope
 //
 // Kernel docs:
 // https://www.kernel.org/doc/html/v4.15/admin-guide/LSM/Yama.html
-func YAMAScopeDescription(scope string) string {
+func YamaScopeDescription(scope string) string {
 	switch scope {
 	case "0":
 		return "classic ptrace permissions"

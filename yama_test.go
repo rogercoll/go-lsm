@@ -6,14 +6,14 @@ import (
 	"testing"
 )
 
-func TestYAMAIsEnabled(t *testing.T) {
+func TestYAMAIsActive(t *testing.T) {
 	var yamaFileTest = []struct {
 		name        string
 		fileContent string
 		out         bool
 	}{
 		{"Not enabled, with default value", "0\n", false},
-		{"Enabled, restricted", "1\n", true},
+		{"Active, restricted", "1\n", true},
 	}
 	for _, tt := range yamaFileTest {
 		t.Run(tt.name, func(t *testing.T) {
@@ -30,7 +30,7 @@ func TestYAMAIsEnabled(t *testing.T) {
 			if err != nil {
 				t.Error(err)
 			}
-			enabled, err := lsm.IsYamaEnabled()
+			enabled, err := lsm.IsYamaActive()
 			if err != nil {
 				t.Error(err)
 			}

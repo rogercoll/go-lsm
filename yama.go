@@ -18,8 +18,8 @@ func parsePtraceScopeFile(path string) (string, error) {
 	}
 }
 
-// IsYamaEnabled checks whether YAMA is enabled or not
-func (l *LSM) IsYamaEnabled() (bool, error) {
+// IsYamaActive checks whether YAMA is enabled or not
+func (l *LSM) IsYamaActive() (bool, error) {
 	scope, err := parsePtraceScopeFile(l.c.YamaScope)
 	if err != nil {
 		return false, err

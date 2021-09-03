@@ -40,3 +40,20 @@ if err != nil {
 }
 modules, err := l.GetLoadedModules()
 ```
+
+### Loaded VS Active
+
+Multiple linux security modules can loaded in a system, but they can not be enabled. With the default configuration some of the modules would be loaded but not actually securing the system, as they might need a more restrictive configuration. 
+
+For example, `lockdown` can be loaded but with no additional configuration no security tasks are performed, thus it is not active.
+
+A function is provided for each covered lsm to check whether it is active with at least the less restrictive mode (but still restrictive!) or not, for example:
+
+```go
+yactive, err := l.IsYamaActive()
+if err != nil {
+  log.Fatalf("Failed to check whether yama is securing the system or not: %v", err)
+}
+lactive, err := l.IsLockdownActive()
+...
+```

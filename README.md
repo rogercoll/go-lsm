@@ -5,6 +5,16 @@
 
 Go-wrapper around **Linux Security Modules** basic operations. 
 
+## Coverage
+
+- [x] AppArmor
+- [x] Lockdown
+- [ ] LoadPin
+- [ ] SELinux
+- [ ] Smack
+- [ ] TOMOYO
+- [x] Yama
+
 ## Install
 
 In order to intercat with SELinux we need the `selinux.h` header file in our system.
